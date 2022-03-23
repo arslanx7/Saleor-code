@@ -12,6 +12,6 @@ jobs:
     # Service containers to run with `container-job`
     services:
       # Label used to access the service container
-      redis:
+      Jenkins:
         # Docker Hub image
         image: jenkins
