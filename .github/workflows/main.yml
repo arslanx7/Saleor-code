@@ -15,3 +15,6 @@ jobs:
       Jenkins:
         # Docker Hub image
         image: jenkins
+        ports:
+          # Opens tcp port 6379 on the host and service container
+          - 6379:6379
