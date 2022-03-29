@@ -25,11 +25,9 @@ jobs:
             docker images
             docker tag saleor-code_dashboard saleortest2.azurecr.io/dashboard
             docker tag saleor-code_api saleortest2.azurecr.io/api
-
-      - name: Pushing to ACR
-        run:
             docker push saleortest2.azurecr.io/dashboard
             docker push saleortest2.azurecr.io/api
-      
+
+
       
           
