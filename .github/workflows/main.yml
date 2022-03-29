@@ -16,4 +16,4 @@ jobs:
       
       
       - run: |
-          docker build
+          docker compose build
