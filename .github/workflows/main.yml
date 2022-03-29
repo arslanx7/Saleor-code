@@ -18,4 +18,6 @@ jobs:
 
       - run: |
             docker compose build
+            docker tag test_dashboard saleortest2.azurecr.io/dashboard
+            docker tag test_api saleortest2.azurecr.io/api
           
