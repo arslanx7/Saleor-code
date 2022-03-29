@@ -1,7 +1,7 @@
 name: Build a Docker image and Push it to ACR
 
 on:
-  push:
+  commit:
     branches: [ master ]
   pull_request:
     branches: [ master ]
