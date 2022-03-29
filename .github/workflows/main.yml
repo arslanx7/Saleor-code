@@ -16,5 +16,5 @@ jobs:
 
       
       
-      - run: |
-          docker compose build
+      - name: run docker compose
+        run: docker compose build
