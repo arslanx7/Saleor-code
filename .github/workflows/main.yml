@@ -13,7 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/docker compose@v2
       
       
       - run: |
-          docker compose.yml build
+          docker compose build
