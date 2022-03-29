@@ -17,4 +17,4 @@ jobs:
       
       
       - name: run docker compose
-        run: docker compose build
+        run: docker compose version
