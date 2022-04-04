@@ -27,6 +27,21 @@ jobs:
         with:
        
           creds: '${{secrets.AZURE_CREDENTIALS}}'
+          
+        # Create K8s secrets to pull images
+      - name: Create secret in Kubernetes cluster
+        uses: Azure/k8s-create-secret@v1.1
+        with:
+          # Container registry url
+          container-registry-url: saleortest2.azurecr.io
+          # Container registry username
+          container-registry-username: '${{ secrets.ACR_username }}'
+          # Container registry password
+          container-registry-password:  '${{ secrets.ACR_password }}'
+          # Type of Kubernetes secret. For example, docker-registry or generic
+          secret-type: docker-registry
+          # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
+          secret-name: docker-image-pull-secret
  
           resource-group: Testresgroup
 
