@@ -14,21 +14,28 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       
-      - uses: azure/docker-login@v1
-        with:
-          login-server: saleortest2.azurecr.io
-          username: ${{ secrets.ACR_username }}
-          password: ${{ secrets.ACR_password }}
+#       - uses: azure/docker-login@v1
+#         with:
+#           login-server: saleortest2.azurecr.io
+#           username: ${{ secrets.ACR_username }}
+#           password: ${{ secrets.ACR_password }}
       
-      - run: |
+#       - run: |
       
       - name: Azure Kubernetes set context
         uses: Azure/aks-set-context@v1
         with:
-       
+        # Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`
           creds: '${{secrets.AZURE_CREDENTIALS}}'
+        # Resource Group Name
+          resource-group: Testresgroup
+        # AKS Cluster Name
+          cluster-name: Testkbs
           
-        # Create K8s secrets to pull images
+       
+       
+       
+       # Create K8s secrets to pull images
       - name: Create secret in Kubernetes cluster
         uses: Azure/k8s-create-secret@v1.1
         with:
