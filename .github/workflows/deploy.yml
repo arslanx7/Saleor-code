@@ -46,9 +46,9 @@ jobs:
           # Container registry password
           container-registry-password:  '${{ secrets.ACR_password }}'
           # Type of Kubernetes secret. For example, docker-registry or generic
-          secret-type: Azure-registry
+          secret-type: docker-registry
           # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
-          secret-name: Azure-image-pull-secret
+          secret-name: docker-image-pull-secret
  
           resource-group: Testresgroup
 
