@@ -1,10 +1,10 @@
-# name: Deploy to AKS
+name: Deploy to AKS
 
-# on:
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
+on:
+  push:
+    branches: [ test ]
+  pull_request:
+    branches: [ test ]
 
   workflow_dispatch:
 
@@ -21,4 +21,14 @@ jobs:
           password: ${{ secrets.ACR_password }}
       
       - run: |
+      
+      - name: Azure Kubernetes set context
+        uses: Azure/aks-set-context@v1
+        with:
+       
+          creds: '${{secrets.AZURE_CREDENTIALS}}'
+ 
+          resource-group: Testresgroup
+
+          cluster-name: Testkbs
             
