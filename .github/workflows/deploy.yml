@@ -18,10 +18,11 @@ jobs:
         with:
           login-server: saleortest2.azurecr.io
           username: ${{ secrets.ACR_username }}
-          password: ${{ secrets.ACR_password }}
-      
-      -   name: Build docker image and push to AC
-          run: |
+          password: ${{ secrets.ACR_password }} 
+          
+          
+      - name: Build docker image and push to AC
+        run: |
             docker compose build
             docker images
             docker tag saleor-code_dashboard saleortest2.azurecr.io/dashboard
