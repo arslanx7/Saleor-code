@@ -17,7 +17,8 @@ jobs:
       - uses: azure/docker-login@v1
         with:
           login-server: saleortest2.azurecr.io
-          creds: '${{secrets.AZURE_CREDENTIALS}}'
+          username: ${{ secrets.AZURE_CREDENTIALS }}
+          password: ${{ secrets.AZURE_CREDENTIALS }}
       
       
           -name: Build docker image and push to ACR
