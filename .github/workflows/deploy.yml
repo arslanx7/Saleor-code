@@ -49,12 +49,11 @@ jobs:
       - name: Azure Kubernetes set context
         uses: Azure/aks-set-context@v1
         with:
-        # Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`
           creds: '${{secrets.AZURE_CREDENTIALS}}'
         # Resource Group Name
-          resource-group: Testresgroup
+          resource-group: ${{ secrets.RG_NAME }}
         # AKS Cluster Name
-          cluster-name: Testkbs
+          cluster-name: ${{ secrets.AKS_NAME }}
           
        
 
@@ -72,8 +71,8 @@ jobs:
           secret-type: docker-registry
           # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
           secret-name: docker-image-pull-secret
-          resource-group: Testresgroup
-          cluster-name: Testkbs
+          resource-group: ${{ secrets.RG_NAME }}
+          cluster-name: ${{ secrets.AKS_NAME }}
           
       
       - name: Deploy to Kubernetes cluster
@@ -95,6 +94,5 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
-           
             az aks stop --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
             
