@@ -81,4 +81,12 @@ jobs:
           imagepullsecrets: docker-image-pull-secret
         # deploy/promote/reject
           action: deploy
+          
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+           
+            az aks stop --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
             
