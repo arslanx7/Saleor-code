@@ -1,0 +1,92 @@
+name: Deploy to AKS
+
+on:
+  push:
+    branches: [ test ]
+  pull_request:
+    branches: [ test ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+#       - uses: azure/docker-login@v1
+#         with:
+#           login-server: saleortest2.azurecr.io
+#           username: ${{ secrets.ACR_username }}
+#           password: ${{ secrets.ACR_password }}
+      
+#       - run: |
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az account show
+            az account set --subscription ${{ secrets.SUBSCRIPTIONID }}
+            az aks get-credentials --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }}
+            az aks start --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
+      
+      
+      - name: Azure Kubernetes set context
+        uses: Azure/aks-set-context@v1
+        with:
+        # Azure credentials i.e. output of `az ad sp create-for-rbac --sdk-auth`
+          creds: '${{secrets.AZURE_CREDENTIALS}}'
+        # Resource Group Name
+          resource-group: Testresgroup
+        # AKS Cluster Name
+          cluster-name: Testkbs
+          
+       
+
+       # Create K8s secrets to pull images
+      - name: Create secret in Kubernetes cluster
+        uses: Azure/k8s-create-secret@v1.1
+        with:
+          # Container registry url
+          container-registry-url: saleortest2.azurecr.io
+          # Container registry username
+          container-registry-username: '${{ secrets.ACR_username }}'
+          # Container registry password
+          container-registry-password:  '${{ secrets.ACR_password }}'
+          # Type of Kubernetes secret. For example, docker-registry or generic
+          secret-type: docker-registry
+          # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
+          secret-name: docker-image-pull-secret
+          resource-group: Testresgroup
+          cluster-name: Testkbs
+          
+      
+      - name: Deploy to Kubernetes cluster
+        uses: Azure/k8s-deploy@v1
+        with:        
+        # Path to the manifest files which will be used for deployment.
+          manifests: |
+            k8s/deployment.yml
+            k8s/service.yml
+        # Fully qualified resource URL of the image(s) to be used for substitutions on the manifest files Example: contosodemo.azurecr.io/helloworld:test
+          images: 'saleortest2.azurecr.io/dashboard:latest'
+        # Name of a docker-registry secret that has already been set up within the cluster. Each of these secret names are added under imagePullSecrets field for the workloads found in the input manifest files
+          imagepullsecrets: docker-image-pull-secret
+        # deploy/promote/reject
+          action: deploy
+          
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+           
+            az aks stop --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
+            
