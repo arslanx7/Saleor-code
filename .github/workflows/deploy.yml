@@ -22,6 +22,22 @@ jobs:
       
 #       - run: |
       
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az account show
+            az account set --subscription ${{ secrets.SUBSCRIPTIONID }}
+            az aks get-credentials --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }}
+            az aks start --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
+      
+      
       - name: Azure Kubernetes set context
         uses: Azure/aks-set-context@v1
         with:
@@ -33,8 +49,7 @@ jobs:
           cluster-name: Testkbs
           
        
-       
-       
+
        # Create K8s secrets to pull images
       - name: Create secret in Kubernetes cluster
         uses: Azure/k8s-create-secret@v1.1
@@ -49,11 +64,10 @@ jobs:
           secret-type: docker-registry
           # Name of the secret. You can use this secret name in the Kubernetes YAML configuration file.
           secret-name: docker-image-pull-secret
- 
           resource-group: Testresgroup
-
           cluster-name: Testkbs
           
+      
       - name: Deploy to Kubernetes cluster
         uses: Azure/k8s-deploy@v1
         with:        
