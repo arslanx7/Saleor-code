@@ -21,7 +21,7 @@ jobs:
           password: ${{ secrets.AZURE_CREDENTIALS }}
           
           -name: Build docker image and push to AC
-          run:
+          run: |
             docker compose build
             docker images
             docker tag saleor-code_dashboard saleortest2.azurecr.io/dashboard
