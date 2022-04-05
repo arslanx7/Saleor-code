@@ -20,14 +20,14 @@ jobs:
           username: ${{ secrets.AZURE_CREDENTIALS }}
           password: ${{ secrets.AZURE_CREDENTIALS }}
           
-          -name: Build docker image and push to AC
-          run: |
+      -   name: Build docker image and push to AC
+          run:
             docker compose build
             docker images
             docker tag saleor-code_dashboard saleortest2.azurecr.io/dashboard
             docker tag saleor-code_api saleortest2.azurecr.io/api
             docker push saleortest2.azurecr.io/dashboard
             docker push saleortest2.azurecr.io/api
-        
+
       
           
