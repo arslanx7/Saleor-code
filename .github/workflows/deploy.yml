@@ -2,11 +2,6 @@ name: Deploy to AKS
 
 on:
   workflow_dispatch:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
-
-  workflow_dispatch:
 
 jobs:
   build:
