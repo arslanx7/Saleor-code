@@ -1,4 +1,4 @@
-name: Deploy to AKS
+name: Stop and Delete AKS
 
 on:
   workflow_dispatch:
