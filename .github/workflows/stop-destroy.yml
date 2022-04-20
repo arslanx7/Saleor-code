@@ -17,6 +17,8 @@ jobs:
       
       - run: |
             az aks stop --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
+            az aks delete --name bsts-aks --resource-group aks-bsts  --no-wait --yes
+
 
             
             
