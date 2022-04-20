@@ -17,3 +17,4 @@ jobs:
       
       - run: |
             az aks create --resource-group aks-bsts --name bsts-aks --node-count 1 --generate-ssh-keys
+            az aks start --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
