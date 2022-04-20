@@ -1,0 +1,27 @@
+name: Deploy to AKS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az account show
+            az account set --subscription ${{ secrets.SUBSCRIPTIONID }}
+            az aks get-credentials --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }}
+            az aks delete --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }} --node-count 1
+            az aks stop --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
