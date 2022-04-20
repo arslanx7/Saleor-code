@@ -20,8 +20,8 @@ jobs:
         run: |
             docker compose build
             docker images
-            docker tag saleor-code_dashboard ${{ secrets.Dashboard_image }}
-            docker tag saleor-code_api ${{ secrets.Api_image }}
+            docker tag saleor-code_dashboard ${{ secrets.ACR }}/dashboard
+            docker tag saleor-code_api ${{ secrets.ACR }}/API
             docker push ${{ secrets.Dashboard_image }}
             docker push ${{ secrets.Api_image }}
 
