@@ -13,7 +13,7 @@ spec:
     spec:
       containers:
       - name: saleor-demo
-        image: ${{ secrets.Dashboard_image }}
+        image: ${{ secrets.ACR }}/dashboard
         resources:
           limits:
             memory: "128Mi"
