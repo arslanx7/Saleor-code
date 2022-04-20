@@ -23,5 +23,6 @@ jobs:
             az account show
             az account set --subscription ${{ secrets.SUBSCRIPTIONID }}
             az aks get-credentials --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }}
-            az aks delete --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }} --node-count 1
             az aks stop --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
+            az aks delete --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
+            
