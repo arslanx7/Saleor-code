@@ -42,7 +42,7 @@ jobs:
         uses: Azure/k8s-create-secret@v1.1
         with:
           # Container registry url
-          container-registry-url: saleortest2.azurecr.io
+          container-registry-url: ${{ secrets.ACR }}
           # Container registry username
           container-registry-username: '${{ secrets.ACR_username }}'
           # Container registry password
