@@ -16,4 +16,4 @@ jobs:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
       - run: |
-            az aks create --resource-group aks-bsts --name bsts-aks --node-count 1
+            az aks create --resource-group aks-bsts --name bsts-aks --node-count 1 --generate-ssh-keys
