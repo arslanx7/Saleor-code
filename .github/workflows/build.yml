@@ -11,7 +11,7 @@ jobs:
       
       - uses: azure/docker-login@v1
         with:
-          login-server: saleortest2.azurecr.io
+          login-server: ${{ secrets.ACR }}
           username: ${{ secrets.ACR_username }}
           password: ${{ secrets.ACR_password }} 
           
