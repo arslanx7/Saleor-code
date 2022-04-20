@@ -18,7 +18,7 @@ jobs:
           
       - name: Build docker image and push to AC
         run: |
-            docker compose build -tag bstsreg.azurecr.io:'${{github.sha}}'
+            docker compose build --t bstsreg.azurecr.io:'${{github.sha}}'
             docker images
             
 
