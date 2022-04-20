@@ -20,8 +20,8 @@ jobs:
         with:
           azcliversion: 2.30.0
           inlineScript: |
+            az aks create --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }} --node-count 1
             az account show
             az account set --subscription ${{ secrets.SUBSCRIPTIONID }}
             az aks get-credentials --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }}
-            az aks create --resource-group ${{ secrets.RG_NAME }} --name ${{ secrets.AKS_NAME }} --node-count 1
             az aks start --name ${{ secrets.AKS_NAME }} --resource-group ${{ secrets.RG_NAME }}
